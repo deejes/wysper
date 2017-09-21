@@ -1,0 +1,28 @@
+import nacl.utils
+from nacl.public import PrivateKey, Box
+
+# Generate Bob's private key, which must be kept secret
+skbob = PrivateKey.generate()
+pkbob = skbob.public_key
+
+# Alice does the same and then Alice and Bob exchange public keys
+skalice = PrivateKey.generate()
+pkalice = skalice.public_key
+
+bob_box = Box(skbob, pkalice)
+
+message = b"Kill all humans"
+
+encrypted = bob_box.encrypt(message)
+
+nonce = nacl.utils.random(Box.NONCE_SIZE)
+
+encrypted = bob_box.encrypt(message, nonce)
+
+alice_box = Box(skalice, pkbob)
+
+
+plaintext = alice_box.decrypt(encrypted)
+
+
+print (plaintext)

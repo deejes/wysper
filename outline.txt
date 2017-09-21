@@ -1,0 +1,15 @@
+			KrptoNight
+
+
+1) everyone has a public key and a private key
+2) private is generated client side and stored as a cookie
+3) users should be able to share their public key as a QR code/ hex string / base 64 (somehow)
+4) Other user enters the public key
+
+
+Stretch - 
+
+1) store ecrypted private keys on server 
+- encyption keys for excryption are a combination of user pw and a salt
+2) store salt and encrypted private key together
+3) have private key decoded on client side when user enters pw.
