@@ -19,6 +19,6 @@ from django_private_chat import urls as django_private_chat_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('django_private_chat.urls')),
+    url(r'^', include('chat.urls')),
 
 ]
