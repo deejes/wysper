@@ -1,0 +1,14 @@
+{% extends 'chat_app/base.html' %}
+
+{% block content %}
+<h2>Welcome, {{ user.username }}!</h2>
+
+
+
+
+
+
+{% for x in users %}
+{{x}} <br />
+{% endfor %}
+{% endblock %}
