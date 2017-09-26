@@ -5,19 +5,23 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm,User
 from django.shortcuts import render, redirect
-
-
+from .models import Message 
+from datetime import datetime
 
 
 def index(request):
+     if request.method == "POST":
+          message_instance = Message.objects.create(body=request.POST['chat-msg'])
      return render(request, 'chat_app/index.html')
 
 def test(request):
-     
-     import pdb
-     pdb.set_trace()
-     mes = request.POST['chat-msg']
-     return render(request, 'chat_app/test.html', {'mes':mes})
+    if request.method == "POST":
+          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now())     
+    import pdb
+#     pdb.set_trace()
+    messes = Message.objects.all
+    mes = request.POST['chat-msg']
+    return render(request, 'chat_app/test.html', {'mes':mes,'messes':messes})
 
 @login_required
 def home(request):
