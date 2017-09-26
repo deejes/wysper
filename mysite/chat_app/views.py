@@ -13,7 +13,8 @@ def index(request):
      return render(request, 'chat_app/index.html')
 
 def test(request):
-     prinn (request)
+     
+     return render(request, 'chat_app/test.html', context_)
 
 @login_required
 def home(request):
