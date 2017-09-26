@@ -14,7 +14,10 @@ def index(request):
 
 def test(request):
      
-     return render(request, 'chat_app/test.html', context_)
+     import pdb
+     pdb.set_trace()
+     mes = request.POST['chat-msg']
+     return render(request, 'chat_app/test.html', {'mes':mes})
 
 @login_required
 def home(request):
