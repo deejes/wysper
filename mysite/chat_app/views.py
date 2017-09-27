@@ -10,15 +10,17 @@ from datetime import datetime
 
 
 def index(request):
+     import pdb
+     pdb.set_trace()
      if request.method == "POST":
           message_instance = Message.objects.create(body=request.POST['chat-msg'])
      return render(request, 'chat_app/index.html')
 
 def test(request):
-    if request.method == "POST":
-          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now())     
     import pdb
-#     pdb.set_trace()
+    pdb.set_trace()
+    if request.method == "POST":
+          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user)     
     messes = Message.objects.all
     mes = request.POST['chat-msg']
     return render(request, 'chat_app/test.html', {'mes':mes,'messes':messes})
