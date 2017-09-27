@@ -9,9 +9,11 @@ from .models import Message
 from datetime import datetime
 
 
-def index(request):
+def index(request,receiver_id):
      import pdb
-     #pdb.set_trace()
+
+     pdb.set_trace()
+     request.session['receiver_id'] = receiver_id
      if request.method == "POST":
           message_instance = Message.objects.create(body=request.POST['chat-msg'])
      return render(request, 'chat_app/index.html')
@@ -20,7 +22,7 @@ def test(request):
     import pdb
     #pdb.set_trace()
     if request.method == "POST":
-          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user)     
+          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = User.objects.filter(id=request.session['receiver_id'])[0] )     
     messes = Message.objects.all
     mes = request.POST['chat-msg']
     return render(request, 'chat_app/test.html', {'mes':mes,'messes':messes})
