@@ -7,22 +7,25 @@ from django.contrib.auth.forms import UserCreationForm,User
 from django.shortcuts import render, redirect
 from .models import Message 
 from datetime import datetime
+from django.utils import timezone
 
 
 def index(request,receiver_id):
      import pdb
 
-     pdb.set_trace()
-     request.session['receiver_id'] = receiver_id
+#     pdb.set_trace()
+
      if request.method == "POST":
-          message_instance = Message.objects.create(body=request.POST['chat-msg'])
+          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = User.objects.filter(id=request.session['receiver_id'])[0] )
+     else:
+          request.session['receiver_id'] = receiver_id          
      return render(request, 'chat_app/index.html')
 
 def test(request):
     import pdb
     #pdb.set_trace()
     if request.method == "POST":
-          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = User.objects.filter(id=request.session['receiver_id'])[0] )     
+          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = User.objects.filter(id=request.session['receiver_id'])[0] ) 
     messes = Message.objects.all
     mes = request.POST['chat-msg']
     return render(request, 'chat_app/test.html', {'mes':mes,'messes':messes})
