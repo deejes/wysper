@@ -16,15 +16,17 @@
   </head>
 
   <body>
+    <div>
+    </div>
     <div id="chat-body" class="panel panel-default">
       <div class="panel-heading">Chat Box</div>
       <div id="msg-list-div" class="panel-body">
         <ul id="msg-list" class="list-group">
           {% for obj in chat %}
-          {% if obj.user == request.user %}
-          <li class="text-right list-group-item">{{ obj.message }}</li>
+          {% if obj.sender == request.user %}
+          <li class="text-right list-group-item">{{ obj.body }}</li>
           {% else %}
-          <li class="text-left list-group-item">{{ obj.message }}</li>
+          <li class="text-left list-group-item">{{ obj.body }}</li>
           {% endif %}
           {% empty %}
           <li class="text-right list-group-item">No messages yet!</li>
@@ -37,7 +39,7 @@
       </div>
     </div>
 
-    <form id="chat-form" method="post" action="/index/"> {% csrf_token %} 
+    <form id="chat-form" method="post" action="/index/{% block content %}{{receiver_id}}{%endblock%}"> {% csrf_token %} 
       <div id="chat-bottom" class="input-group">
         <input type="text" id="chat-msg" name="chat-msg" class="form-control"/>
         <span class="input-group-btn">

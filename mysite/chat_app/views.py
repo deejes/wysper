@@ -12,14 +12,24 @@ from django.utils import timezone
 
 def index(request,receiver_id):
      import pdb
+     request.session['receiver_id'] = receiver_id
+     message_receiver = User.objects.get(id=request.session['receiver_id'])
+     chat = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
+   
 
-#     pdb.set_trace()
+     
+     
+     #pdb.set_trace()
 
      if request.method == "POST":
-          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = User.objects.filter(id=request.session['receiver_id'])[0] )
+          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = message_receiver )
+          chat = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
      else:
-          request.session['receiver_id'] = receiver_id          
-     return render(request, 'chat_app/index.html')
+          request.session['receiver_id'] = receiver_id
+          message_receiver = User.objects.get(id=request.session['receiver_id'])
+          chat = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
+     
+     return render(request, 'chat_app/index.html', {'chat': chat, 'receiver_id':receiver_id})
 
 def test(request):
     import pdb
