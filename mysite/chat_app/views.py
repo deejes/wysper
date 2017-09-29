@@ -19,11 +19,10 @@ def index(request,receiver_id):
      chat = (chat_from_receiver | chat_from_user).order_by('date')
      #pdb.set_trace()
      if request.method == "POST":
-
           message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = message_receiver )
          # chat = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
-     else:
-          request.session['receiver_id'] = receiver_id
+     #else:
+     #     request.session['receiver_id'] = receiver_id
          # message_receiver = User.objects.get(id=request.session['receiver_id'])
           #chat = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
      
