@@ -16,7 +16,7 @@ def index(request,receiver_id):
      message_receiver = User.objects.get(id=request.session['receiver_id'])
      chat_from_user = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
      chat_from_receiver = Message.objects.filter(sender=message_receiver).filter(receiver=request.user)
-     chat = chat_from_receiver | chat_from_user
+     chat = (chat_from_receiver | chat_from_user).order_by('date')
      #pdb.set_trace()
      if request.method == "POST":
 
