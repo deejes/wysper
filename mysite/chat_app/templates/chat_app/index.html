@@ -3,7 +3,7 @@
 <html>
 
   <head>
-    <title>Chat Panel</title>
+    <title>Chat Panel {%block title%}{request.user}{%endblock%}</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'chat.css' %}">
@@ -19,7 +19,11 @@
     <div>
     </div>
     <div id="chat-body" class="panel panel-default">
-      <div class="panel-heading">Chat Box</div>
+      <div class="panel-heading">
+	<a href="/">Home</a>
+	Chat Box
+      </div>
+  
       <div id="msg-list-div" class="panel-body">
         <ul id="msg-list" class="list-group">
           {% for obj in chat %}
