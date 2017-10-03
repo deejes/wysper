@@ -10,7 +10,7 @@ from datetime import datetime
 from django.utils import timezone
 
 
-def index(request,receiver_id):
+def chat_box(request,receiver_id):
      import pdb
      request.session['receiver_id'] = receiver_id
      message_receiver = User.objects.get(id=request.session['receiver_id'])
@@ -26,7 +26,7 @@ def index(request,receiver_id):
          # message_receiver = User.objects.get(id=request.session['receiver_id'])
           #chat = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
      
-     return render(request, 'chat_app/index.html', {'chat': chat, 'receiver_id':receiver_id})
+     return render(request, 'chat_app/chat_box.html', {'chat': chat, 'receiver_id':receiver_id})
 
 @login_required
 def home(request):

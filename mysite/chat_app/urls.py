@@ -12,6 +12,6 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'chat_app/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^signup/$', views.signup, name='signup'),
-    url(r'^index/([0-9]*)',views.index,name='index'),
+    url(r'^chat/([0-9]*)',views.chat_box,name='chat_box'),
 
 ]
