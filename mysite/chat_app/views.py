@@ -28,15 +28,6 @@ def index(request,receiver_id):
      
      return render(request, 'chat_app/index.html', {'chat': chat, 'receiver_id':receiver_id})
 
-def test(request):
-    import pdb
-    #pdb.set_trace()
-    if request.method == "POST":
-          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = User.objects.filter(id=request.session['receiver_id'])[0] ) 
-    messes = Message.objects.all
-    mes = request.POST['chat-msg']
-    return render(request, 'chat_app/test.html', {'mes':mes,'messes':messes})
-
 @login_required
 def home(request):
     users = User.objects.all()
