@@ -3,7 +3,7 @@
 <html>
 
   <head>
-    <title>Chat Panel {%block title%}{request.user}{%endblock%}</title>
+    <title>Chat Panel  </title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'chat.css' %}">
@@ -22,6 +22,7 @@
       <div class="panel-heading">
 	<a href="/">Home</a>
 	Chat Box
+	{%block title%}{{request.user}} {{request.session.pig}}{%endblock%}
       </div>
   
       <div id="msg-list-div" class="panel-body">
@@ -53,7 +54,7 @@
     </form>
   </body>
 
-  <!-- script src="{% static 'chat.js' %}"></script-->
+ <script> src="{% static 'chat.js' %}"></script>
 </html>
 
 
