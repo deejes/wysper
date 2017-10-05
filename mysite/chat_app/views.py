@@ -13,7 +13,8 @@ from django.utils import timezone
 def chat_box(request,receiver_id):
      import pdb
      request.session['receiver_id'] = receiver_id
-     request.session['pig'] = "oink"
+     request.session['pig'] = User.objects.filter(id=receiver_id)[0].username
+     # pdb.set_trace()
      message_receiver = User.objects.get(id=request.session['receiver_id'])
      chat_from_user = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
      chat_from_receiver = Message.objects.filter(sender=message_receiver).filter(receiver=request.user)
