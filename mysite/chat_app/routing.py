@@ -5,7 +5,7 @@
 # ]
 
 from channels.routing import route
-from myapp.consumers import ws_add, ws_message, ws_disconnect
+from chat_app.consumers import ws_add, ws_message, ws_disconnect
 
 channel_routing = [
     route("websocket.connect", ws_add),
