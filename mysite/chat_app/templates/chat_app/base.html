@@ -1,3 +1,4 @@
+{% load staticfiles %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -5,6 +6,8 @@
     <meta charset="utf-8">
     <title>{% block title %}Simple is Better Than Complex{% endblock %}</title>
   </head>
+  <script src="jquery-3.2.1.min.js"></script>
+
   <body>
     <header>
       <h1>My Site</h1>
@@ -19,5 +22,6 @@
       {% block content %}
       {% endblock %}
     </main>
+    <script src="{% static 'chat.js' %}"></script>
   </body>
 </html>
