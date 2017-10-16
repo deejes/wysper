@@ -9,10 +9,10 @@ from .models import Message
 from datetime import datetime
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
-from rest_frameworks.views import APIView
-from rest_frameworks.response import Response
-from rest_frameworks import status
-from .serializer import MessageSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import MessageSerializer
 
 def chat_box(request,receiver_id):
      import pdb
