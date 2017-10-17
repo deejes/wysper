@@ -3,7 +3,18 @@ $( "#send" ).click(function(e) {
   
   e.target.value = "asd";
   alert('click!');
+  $.ajax({
+    type: 'GET',
+    url: '/messages/',
+    success: function(messages){
+      $.each(messages, function(i,message){
+	debugger;
+	 $('#msg-list').append('<li class="text-right list-group-item">' + message.msg + '</li>');
+      });
+    }
+  });
 });
+
 
 
 // $('#chat').on('submit', function(event){
