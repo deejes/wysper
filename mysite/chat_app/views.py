@@ -8,7 +8,19 @@ from django.shortcuts import render, redirect
 from .models import Message 
 from datetime import datetime
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import MessageSerializer
 
+class MessageList(APIView):
+     def get(self,request):
+          messages = Message.objects.all()
+          serializer = MessageSerializer(messages,many=True)
+          return Response(serializer.data)
+     def post(self,request):
+          pass
 
 def chat_box(request,receiver_id):
      import pdb
