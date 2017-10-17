@@ -11,22 +11,26 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status,generics
 from .serializers import MessageSerializer
 
 class MessageList(APIView):
-     def get(self,request):
-          messages = Message.objects.all()
-          serializer = MessageSerializer(messages,many=True)
+     def get(self,*kwargs):
+          sender_id = kwargs[0].user.id
+          receiver_id = int(kwargs[1])
+          #import pdb; pdb.set_trace()
+          user_messages = Message.objects.filter(sender=sender_id).filter(receiver=receiver_id)
+          receiver_messages = Message.objects.filter(sender=receiver_id).filter(receiver=sender_id)
+          chat = (user_messages | receiver_messages).order_by('date')
+          serializer = MessageSerializer(chat,many=True)
           return Response(serializer.data)
      def post(self,request):
           pass
 
 def chat_box(request,receiver_id):
-     import pdb
+     # import pdb; pdb.set_trace()
      request.session['receiver_id'] = receiver_id
      request.session['pig'] = User.objects.filter(id=receiver_id)[0].username
-     # pdb.set_trace()
      message_receiver = User.objects.get(id=request.session['receiver_id'])
      chat_from_user = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
      chat_from_receiver = Message.objects.filter(sender=message_receiver).filter(receiver=request.user)

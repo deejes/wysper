@@ -1,15 +1,13 @@
 $( "#send" ).click(function(e) {
   e.preventDefault();
-  
-  e.target.value = "asd";
-  alert('click!');
   $.ajax({
     type: 'GET',
-    url: '/messages/',
+    url: '/messages/'+receiver_id,
     success: function(messages){
       $.each(messages, function(i,message){
-	debugger;
-	 $('#msg-list').append('<li class="text-right list-group-item">' + message.msg + '</li>');
+	if (message.sender == receiver_id){
+	  $('#msg-list').append('<li class="text-right list-group-item">' + message.body  + '</li>');}
+	else {	  $('#msg-list').append('<li class="text-left list-group-item">' + message.body  + '</li>');};
       });
     }
   });
@@ -28,7 +26,7 @@ $( "#send" ).click(function(e) {
 
 //         success : function(json){
 //             $('#chat-msg').val('');
-//             $('#msg-list').append('<li class="text-right list-group-item">' + json.msg + '</li>');
+//             $('#msg-list').append('<li ass="text-right list-group-item">' + json.msg + '</li>');
 //             var chatlist = document.getElementById('msg-list-div');
 //             chatlist.scrollTop = chatlist.scrollHeight;
 //         }
