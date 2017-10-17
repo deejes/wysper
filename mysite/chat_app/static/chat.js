@@ -1,5 +1,8 @@
 $( "#send" ).click(function(e) {
   e.preventDefault();
+  
+  e.target.value = "asd";
+  alert('click!');
 });
 
 
