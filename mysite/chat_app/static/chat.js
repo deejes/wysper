@@ -15,7 +15,6 @@ $(document).ready(function(){
 
   $( "#send" ).click(function(e) {
   e.preventDefault();
-    alert('c');
     create_post();
   });
 
@@ -59,6 +58,8 @@ function create_post() {
             $('#post-text').val(''); // remove the value from the input
             console.log(json); // log the returned json to the console
             console.log("success"); // another sanity check
+	  $('#msg-list').append('<li class="text-right list-group-item">' +  $('#chat-msg').val()  + '</li>');
+	  $('#chat-msg').val('');
         },
 
         // handle a non-successful response
