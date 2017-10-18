@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
     $.ajax({
     type: 'GET',
@@ -22,6 +20,14 @@ function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
+function pairing(a,b){
+	var a = parseInt(a);
+	var b = parseInt(b);
+  return ((1/2)*(a+b)*(a+b+1)+b);
+}
+  
+  
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -30,6 +36,7 @@ $.ajaxSetup({
     }
 });
 
+  
 
   
 //   $("body").bind("ajaxSend", function(elm, xhr, s){
@@ -50,10 +57,6 @@ function create_post() {
         type : "POST", // http method
         data : { msgbox : $('#chat-msg').val() },
       
-        // data : { the_post : $('#post-text').val() }, //
-      // data sent with the post request // 
-
-        // handle a successful response
         success : function(json) {
             $('#post-text').val(''); // remove the value from the input
             console.log(json); // log the returned json to the console
@@ -69,6 +72,11 @@ function create_post() {
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
+
+  
+
+
+  
 };
 
 // $('#chat').on('submit', function(event){
