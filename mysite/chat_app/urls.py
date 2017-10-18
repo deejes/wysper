@@ -13,6 +13,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^chat/([0-9]*)',views.chat_box,name='chat_box'),
-    url(r'^messages/',views.MessageList.as_view())
+    url(r'^messages/([0-9]*)',views.MessageList.as_view())
 
 ]
