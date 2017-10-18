@@ -24,27 +24,36 @@ class MessageList(APIView):
           chat = (user_messages | receiver_messages).order_by('date')
           serializer = MessageSerializer(chat,many=True)
           return Response(serializer.data)
-     def post(self,request):
+     
+     def post(self,*kwargs):
+          sender_id = User.objects.filter(id=kwargs[0].user.id)[0]
+          receiver_id = User.objects.filter(id=int(kwargs[1]))[0]
+          import pdb;pdb.set_trace()
+          message_instance = Message.objects.create(body=kwargs[0].POST['msgbox'], date = datetime.now(),sender = sender_id, receiver = receiver_id )
+          #serializer = MessageSerializer(message_instance,many=True)
+          return Response({'created':'yes'})
           pass
 
 def chat_box(request,receiver_id):
      # import pdb; pdb.set_trace()
-     request.session['receiver_id'] = receiver_id
-     request.session['pig'] = User.objects.filter(id=receiver_id)[0].username
-     message_receiver = User.objects.get(id=request.session['receiver_id'])
-     chat_from_user = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
-     chat_from_receiver = Message.objects.filter(sender=message_receiver).filter(receiver=request.user)
-     chat = (chat_from_receiver | chat_from_user).order_by('date')
-     #pdb.set_trace()
-     if request.method == "POST":
-          message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = message_receiver )
+     # request.session['receiver_id'] = receiver_id
+     # request.session['pig'] = User.objects.filter(id=receiver_id)[0].username
+     # message_receiver = User.objects.get(id=request.session['receiver_id'])
+     # chat_from_user = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
+     # chat_from_receiver = Message.objects.filter(sender=message_receiver).filter(receiver=request.user)
+     # chat = (chat_from_receiver | chat_from_user).order_by('date')
+     # #pdb.set_trace()
+     # if request.method == "POST":
+     #      message_instance = Message.objects.create(body=request.POST['chat-msg'], date = datetime.now(),sender = request.user, receiver = message_receiver )
+
+     
          # chat = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
      #else:
      #     request.session['receiver_id'] = receiver_id
          # message_receiver = User.objects.get(id=request.session['receiver_id'])
           #chat = Message.objects.filter(sender=request.user).filter(receiver=message_receiver)
      
-     return render(request, 'chat_app/chat_box.html', {'chat': chat, 'receiver_id':receiver_id})
+     return render(request, 'chat_app/chat_box.html', {'receiver_id':receiver_id})
 
 @login_required
 def home(request):
