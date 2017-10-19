@@ -25,8 +25,13 @@ function pairing(a,b){
 	var a = parseInt(a);
 	var b = parseInt(b);
   return ((1/2)*(a+b)*(a+b+1)+b);
-}
-  
+};
+
+  socket = new WebSocket("ws://" + window.location.host + "/chat/123");
+  socket.onmessage= function(e){
+    debugger;
+    $('#msg-list').append('<li class="text-left list-group-item">' + e.data  + '</li>')};
+
   
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
@@ -34,6 +39,9 @@ $.ajaxSetup({
             xhr.setRequestHeader("X-CSRFToken", csrf_token);
         }
     }
+
+
+  
 });
 
   
@@ -52,19 +60,16 @@ $.ajaxSetup({
 
 function create_post() {
   console.log("create post is working!"); // sanity check
-    $.ajax({
+  socket.send( $('#chat-msg').val());
+  $.ajax({
         url : "/messages/"+receiver_id, // the endpoint
         type : "POST", // http method
         data : { msgbox : $('#chat-msg').val() },
       
         success : function(json) {
-            $('#post-text').val(''); // remove the value from the input
-            console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
-	  $('#msg-list').append('<li class="text-right list-group-item">' +  $('#chat-msg').val()  + '</li>');
+   	  $('#msg-list').append('<li class="text-right list-group-item">' +  $('#chat-msg').val()  + '</li>');
 	  $('#chat-msg').val('');
         },
-
         // handle a non-successful response
         error : function(xhr,errmsg,err) {
             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
@@ -72,9 +77,6 @@ function create_post() {
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
-
-  
-
 
   
 };
