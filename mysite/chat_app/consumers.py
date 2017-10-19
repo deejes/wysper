@@ -13,7 +13,7 @@ def ws_add(message):
 
 # Connected to websocket.receive
 def ws_message(message):
-    import pdb;pdb.set_trace()
+    # import pdb;pdb.set_trace()
     group_name = message.content['path'].split('/')[-1]
     Group(group_name).send({
         "text": message.content['text'],

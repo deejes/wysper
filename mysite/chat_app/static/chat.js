@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+  
     $.ajax({
     type: 'GET',
     url: '/messages/'+receiver_id,
@@ -13,7 +15,7 @@ $(document).ready(function(){
 
   $( "#send" ).click(function(e) {
   e.preventDefault();
-    create_post();
+    $.when(create_post()).then(send_message());
   });
 
 function csrfSafeMethod(method) {
@@ -29,9 +31,9 @@ function pairing(a,b){
 
   socket = new WebSocket("ws://" + window.location.host + "/chat/123");
   socket.onmessage= function(e){
-    debugger;
-    $('#msg-list').append('<li class="text-left list-group-item">' + e.data  + '</li>')};
-
+    if ((JSON.parse(JSON.parse(e.data))).sender != user_id){
+      $('#msg-list').append('<li class="text-left list-group-item">' + JSON.parse(JSON.parse(e.data)).msg  + '</li>')};
+  };
   
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
@@ -59,8 +61,7 @@ $.ajaxSetup({
 
 
 function create_post() {
-  console.log("create post is working!"); // sanity check
-  socket.send( $('#chat-msg').val());
+  
   $.ajax({
         url : "/messages/"+receiver_id, // the endpoint
         type : "POST", // http method
@@ -76,11 +77,14 @@ function create_post() {
                 " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
-    });
+  });
 
-  
 };
 
+
+function send_message(){
+  socket.send(JSON.stringify(JSON.stringify({"msg": $('#chat-msg').val(),"sender":user_id})));
+}
 // $('#chat').on('submit', function(event){
 //     event.preventDefault();
 // }
