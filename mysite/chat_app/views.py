@@ -28,11 +28,11 @@ class MessageList(APIView):
      def post(self,*kwargs):
           sender_id = User.objects.filter(id=kwargs[0].user.id)[0]
           receiver_id = User.objects.filter(id=int(kwargs[1]))[0]
-          import pdb;pdb.set_trace()
+          # import pdb;pdb.set_trace()
+          
           message_instance = Message.objects.create(body=kwargs[0].POST['msgbox'], date = datetime.now(),sender = sender_id, receiver = receiver_id )
           #serializer = MessageSerializer(message_instance,many=True)
           return Response({'created':'yes'})
-          pass
 
 def chat_box(request,receiver_id):
      # import pdb; pdb.set_trace()
