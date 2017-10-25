@@ -1,7 +1,7 @@
 $(document).ready(function(){
-
   
-    $.ajax({
+  
+  $.ajax({
     type: 'GET',
     url: '/messages/'+receiver_id,
     success: function(messages){
@@ -83,6 +83,7 @@ function create_post() {
 
 
 function send_message(){
+  
   socket.send(JSON.stringify(JSON.stringify({"msg": $('#chat-msg').val(),"sender":user_id})));
 }
 // $('#chat').on('submit', function(event){
