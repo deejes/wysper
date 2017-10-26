@@ -35,8 +35,6 @@
           {% else %}
           <li class="text-left list-group-item">{{ obj.body }}</li>
           {% endif %}
-          {% empty %}
-          <li class="text-right list-group-item">No messages yet!</li>
           {% endfor %}
           <script>
             var chatlist = document.getElementById('msg-list-div');
