@@ -33,8 +33,8 @@ function pairing(a,b){
   
   // sets behaviour when a message comes across the socket
   socket.onmessage= function(e){
-    if ((JSON.parse(JSON.parse(e.data))).sender != user_id){
-      $('#msg-list').append('<li class="text-left list-group-item">' + JSON.parse(JSON.parse(e.data)).msg  + '</li>')};
+    if (JSON.parse(e.data).sender != user_id){
+      $('#msg-list').append('<li class="text-left list-group-item">' + (JSON.parse(e.data)).msg  + '</li>')};
   };
 
 $.ajaxSetup({
@@ -85,5 +85,5 @@ function create_post() {
 
 // sends a Json message across the socket
 function send_message(){
-  socket.send(JSON.stringify(JSON.stringify({"msg": $('#chat-msg').val(),"sender":user_id})));
+  socket.send(JSON.stringify({"msg": $('#chat-msg').val(),"sender":user_id}));
 }
