@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  // gets list of previous messages and displays them
   $.ajax({
     type: 'GET',
     url: '/messages/'+receiver_id,
@@ -10,7 +11,7 @@ $(document).ready(function(){
       });
     }
     });
-
+  // intercepts the send button,adds message to model, and then sends across the websocket.
   $( "#send" ).click(function(e) {
   e.preventDefault();
     $.when(create_post()).then(send_message());
@@ -27,7 +28,10 @@ function pairing(a,b){
   return ((1/2)*(a+b)*(a+b+1)+b);
 };
 
+  //creates new websocket
   socket = new WebSocket("ws://" + window.location.host + "/chat/123");
+  
+  // sets behaviour when a message comes across the socket
   socket.onmessage= function(e){
     if ((JSON.parse(JSON.parse(e.data))).sender != user_id){
       $('#msg-list').append('<li class="text-left list-group-item">' + JSON.parse(JSON.parse(e.data)).msg  + '</li>')};
@@ -57,7 +61,7 @@ $.ajaxSetup({
 
 
 
-
+  //creates a record in the message model
 function create_post() {
 
   $.ajax({
@@ -79,8 +83,7 @@ function create_post() {
 
 };
 
-
+// sends a Json message across the socket
 function send_message(){
-
   socket.send(JSON.stringify(JSON.stringify({"msg": $('#chat-msg').val(),"sender":user_id})));
 }
