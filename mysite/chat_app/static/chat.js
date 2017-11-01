@@ -11,6 +11,7 @@ $(document).ready(function(){
       });
     }
     });
+
   // intercepts the send button,adds message to model, and then sends across the websocket.
   $( "#send" ).click(function(e) {
   e.preventDefault();
@@ -25,12 +26,13 @@ function csrfSafeMethod(method) {
 function pairing(a,b){
 	var a = parseInt(a);
 	var b = parseInt(b);
-  return ((1/2)*(a+b)*(a+b+1)+b);
+  return ((a**b)+(b**a))
+  //return ((1/2)*(a+b)*(a+b+1)+b);
 };
 
   //creates new websocket
-  socket = new WebSocket("ws://" + window.location.host + "/chat/123");
-  
+  socket = new WebSocket("ws://" + window.location.host + "/chat/" + pairing(user_id,receiver_id));
+
   // sets behaviour when a message comes across the socket
   socket.onmessage= function(e){
     if (JSON.parse(e.data).sender != user_id){
@@ -43,20 +45,7 @@ $.ajaxSetup({
             xhr.setRequestHeader("X-CSRFToken", csrf_token);
         }
     }
-
-
-
-});
-
-
-
-
-//   $("body").bind("ajaxSend", function(elm, xhr, s){
-//    if (s.type == "POST") {
-//       xhr.setRequestHeader('X-CSRF-Token', getCSRFTokenValue());
-//    }
-// });
-
+  });
 });
 
 
